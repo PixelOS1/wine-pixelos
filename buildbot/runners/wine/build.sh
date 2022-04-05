@@ -318,9 +318,9 @@ Build() {
         # The 64bit container has received the 32bit build
         BuildFinalWow64Build
     else
-        if [ "$INSTALL_DEPS" = "1" ]; then
+        #if [ "$INSTALL_DEPS" = "1" ]; then
             # InstallDependencies
-        fi
+        #fi
         DownloadWine
         DownloadWineStaging
         if [ "$patch" ]; then
