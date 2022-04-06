@@ -1,6 +1,7 @@
 [submodule "proton-wine"]
 	path = proton-wine
 	url = https://github.com/PixelOS1/proton-wine
+	branch = pixelos-proton-7.0
 [submodule "wine-staging"]
 	path = wine-staging
 	url = https://github.com/wine-staging/wine-staging/
