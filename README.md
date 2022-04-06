@@ -3,7 +3,7 @@ wine-pixelos
 
 # emerging dependencies 
 
-To compile PixelOS's version of Wine + Proton Patches you will need to first emerge the following:
+To compile PixelOS' version of Wine + Proton Patches you will need to first emerge the following:
 
 `emerge alsa-lib
 alsa-plugins
