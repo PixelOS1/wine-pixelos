@@ -33,7 +33,7 @@ while true ; do
         -p|--patch) patch=$2; shift 2 ;;
         -s|--staging) STAGING=1; shift ;;
         -n|--noupload) NOUPLOAD=1; shift ;;
-        -d|--dependencies) INSTALL_DEPS=1; shift ;;
+        -d|--dependencies) INSTALL_DEPS=$2; shift 2 ;;
         -6|--64bit) WOW64=1; shift ;;
         -k|--keep) KEEP=1; shift ;;
         -f|--keep-upload-file) KEEP_UPLOAD_FILE=1; shift ;;
