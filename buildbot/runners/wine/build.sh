@@ -60,23 +60,54 @@ dest_file="${bin_dir}-build.tar.gz"
 upload_file="wine-${filename_opts}${version}-${arch}.tar.xz"
 
 
-#InstallDependencies() {
-#    sudo apt install -y autoconf bison ccache debhelper desktop-file-utils docbook-to-man \
-#        docbook-utils docbook-xsl flex fontforge gawk gettext libacl1-dev \
-#        libasound2-dev libcloog-ppl1 libcups2-dev libdbus-1-dev \
-#        libgcrypt-dev libgif-dev libglu1-mesa-dev libgsm1-dev libgtk-3-dev \
-#        liblcms2-dev libldap2-dev libmpg123-dev libncurses5-dev \
-#        libopenal-dev libosmesa6-dev libpcap-dev libpulse-dev \
-#        libssl-dev libtiff5-dev libudev-dev libv4l-dev libva-dev libxslt1-dev libxt-dev \
-#        ocl-icd-opencl-dev prelink valgrind linux-libc-dev libppl14 libcolord2 libvulkan-dev \
-#        libgnutls28-dev libgstreamer-plugins-base1.0-dev libgstreamer1.0-dev \
-#        libpng-dev libsdl2-dev libavcodec-dev \
-#	    libavutil-dev libswresample-dev libavcodec58 libswresample3 libavutil56 libfaudio0 libfaudio-dev \
-#        libvkd3d1 libvkd3d-dev libvkd3d-utils1 libvkd3d-shader1 vkd3d-demos libvulkan1 \
-#        libgstreamer1.0-0 gstreamer1.0-plugins-base gstreamer1.0-plugins-good gstreamer1.0-plugins-bad \
-#        gstreamer1.0-plugins-ugly gstreamer1.0-libav gstreamer1.0-doc gstreamer1.0-tools gstreamer1.0-x \
-#        gstreamer1.0-alsa gstreamer1.0-gl gstreamer1.0-gtk3 gstreamer1.0-qt5 gstreamer1.0-pulseaudio
-#}
+InstallDependencies() {
+	emerge 	alsa-lib
+	emerge 	alsa-plugins
+	emerge 	attr
+	emerge 	desktop-file-utils
+	emerge 	dev-perl/SDL
+	emerge 	dosbox
+USE="-abi_x86_32" 	emerge 	faudio
+	emerge 	ffmpeg
+	emerge 	fontconfig
+	emerge 	gettext
+	emerge 	giflib
+	emerge 	glu
+	emerge 	gsm
+	emerge 	gtk3
+	emerge 	libgphoto2
+	emerge 	libjpeg-turbo
+	emerge 	libpcap
+	emerge 	libpng
+	emerge 	libva
+	emerge 	libxml2
+	emerge 	libxslt
+	emerge 	media-gfx/xsane
+	emerge 	media-libs/freetype
+	emerge 	media-libs/gst-plugins-base
+	emerge 	media-libs/lcms
+USE="+wayland" 	emerge 	media-libs/mesa
+	emerge 	media-libs/openal
+	emerge 	media-libs/vulkan-loader
+	emerge 	mpg123
+	emerge 	net-libs/gnutls
+	emerge 	opencl-headers
+	emerge 	opencl-icd-loader
+	emerge 	samba
+	emerge 	sci-libs/libdap
+	emerge 	sci-libs/libigl
+	emerge 	v4l-utils
+	emerge 	vulkan-headers
+	emerge 	x11-libs/libSM
+	emerge 	x11-libs/libXcomposite
+	emerge 	x11-libs/libXcursor
+	emerge 	x11-libs/libXdamage
+	emerge 	x11-libs/libXi
+	emerge 	x11-libs/libXinerama
+	emerge 	x11-libs/libXmu
+	emerge 	x11-libs/libXrandr
+	emerge 	x11-libs/libXxf86vm
+}
 
 DownloadWine() {
     trap TrapClean ERR INT
@@ -318,9 +349,9 @@ Build() {
         # The 64bit container has received the 32bit build
         BuildFinalWow64Build
     else
-        #if [ "$INSTALL_DEPS" = "1" ]; then
-            # InstallDependencies
-        #fi
+        if [ "$INSTALL_DEPS" = "1" ]; then
+            InstallDependencies
+        fi
         DownloadWine
         DownloadWineStaging
         if [ "$patch" ]; then
