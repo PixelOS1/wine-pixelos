@@ -6,7 +6,7 @@
 
 ### (2) WINE PATCHING ###
 
-    cd proton-wine
+    cd ../proton-wine
     git reset --hard HEAD
     git clean -xdf
 
