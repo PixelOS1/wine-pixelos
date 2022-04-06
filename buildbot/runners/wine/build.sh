@@ -64,6 +64,7 @@ InstallDependencies() {
 	emerge 	alsa-lib
 	emerge 	alsa-plugins
 	emerge 	attr
+    emerge ccache
 	emerge 	desktop-file-utils
 	emerge 	dev-perl/SDL
 	emerge 	dosbox
