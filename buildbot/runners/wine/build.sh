@@ -71,6 +71,7 @@ InstallDependencies() {
 USE="-abi_x86_32" 	emerge 	faudio
 	emerge 	ffmpeg
 	emerge 	fontconfig
+    emerge media-libs/gstreamer
 	emerge 	gettext
 	emerge 	giflib
 	emerge 	glu
