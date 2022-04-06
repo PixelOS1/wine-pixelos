@@ -264,64 +264,6 @@ BuildFinalWow64Build() {
     make install
 }
 
-Send64BitBuildAndBuild32bit() {
-    trap TrapClean ERR INT
-    # Build the 64bit version of wine, send it to the 32bit container then exit
-    cd ${root_dir}
-
-    # Package the 64bit build (in a wine64 folder)
-    echo "Sending the 64bit build to the 32bit container"
-    mv wine wine64
-    tar czf ${dest_file} wine64
-    scp ${dest_file} ${buildbot32host}:${root_dir}
-    mv wine64 wine
-    rm ${dest_file}
-
-    echo "Building 32bit wine"
-    opts=""
-    if [ $STAGING ]; then
-        opts="--staging"
-    fi
-    if [ $KEEP ]; then
-        opts="${opts} --keep"
-    fi
-    if [ $KEEP_UPLOAD_FILE ]; then
-        opts="${opts} --keep-upload-file"
-    fi
-    if [ $NOUPLOAD ]; then
-        opts="${opts} --noupload"
-    fi
-    if [ $INSTALL_DEPS ]; then
-        opts="${opts} --dependencies"
-    fi
-    if [ $patch ]; then
-        opts="${opts} --patch $patch"
-    fi
-    if [ $build_name ]; then
-        opts="${opts} --as $build_name"
-    fi
-    if [ $repo_url ]; then
-        opts="${opts} --with $repo_url"
-    fi
-    if [ "$branch_name" ]; then
-        opts="${opts} --branch $branch_name"
-    fi
-    if [ "$CCACHE" ]; then
-        opts="${opts} --useccache"
-    fi
-    if [ "$MINGW" ]; then
-        opts="${opts} --usemingw"
-    fi
-    if [ "$NOSTRIP" ]; then
-        opts="${opts} --nostrip"
-    fi
-
-    echo "Building 32bit wine on 32bit container"
-    ssh -t ${buildbot32host} "${root_dir}/build.sh -v ${version} ${opts} --64bit"
-    echo "Relaunch local build after the 32bit build finished"
-    ./build.sh -v ${version} ${opts}
-    echo "Build relaunched"
-}
 
 Combine64and32bitBuilds() {
     trap TrapClean ERR INT
@@ -365,19 +307,6 @@ Build() {
             ApplyPatch
         fi
         BuildWine
-
-        if [ "$(uname -m)" = "x86_64" ]; then
-            # Send the build to the 32bit container
-            Send64BitBuildAndBuild32bit
-            exit
-        fi
-
-        if [ "$WOW64" ]; then
-            # On a 32bit container, build wine then send it back to the 64bit
-            # container
-            Combine64and32bitBuilds
-            exit
-        fi
 
         echo "Running make install"
         make install
