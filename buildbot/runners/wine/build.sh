@@ -22,7 +22,7 @@ configure_opts="--disable-tests --with-x"
 
 # --with-gstreamer removed
 
-params=$(getopt -n $0 -o a:b:w:v:p:snd6kfcmt --long as:,branch:,with:,version:,patch:,staging,noupload,dependencies,64bit,keep,keep-upload-file,useccache,usemingw,nostrip -- "$@")
+params=$(getopt -n $0 -o a:b:w:v:p:snd6kfcmt --long as:,branch:,with:,version:,patch:,mingwportablepath:,staging,noupload,dependencies,64bit,keep,keep-upload-file,useccache,usemingw,nostrip -- "$@")
 eval set -- $params
 while true ; do
     case "$1" in
@@ -31,6 +31,7 @@ while true ; do
         -w|--with) repo_url=$2; shift 2 ;;
         -v|--version) version=$2; shift 2 ;;
         -p|--patch) patch=$2; shift 2 ;;
+        -p|--mingwportablepath) MINGW_PORTABLE_PATH=$2; shift 2 ;;
         -s|--staging) STAGING=1; shift ;;
         -n|--noupload) NOUPLOAD=1; shift ;;
         -d|--dependencies) INSTALL_DEPS=$2; shift 2 ;;
