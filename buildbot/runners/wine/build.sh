@@ -22,7 +22,7 @@ configure_opts="--disable-tests --with-x"
 
 # --with-gstreamer removed
 
-params=$(getopt -n $0 -o a:b:w:v:p:snd6kfcmt --long as:,branch:,with:,version:,patch:,mingwportablepath:,staging,noupload,dependencies,64bit,keep,keep-upload-file,useccache,usemingw,nostrip -- "$@")
+params=$(getopt -n $0 -o a:b:w:v:p:z:snd6kfcmt --long as:,branch:,with:,version:,patch:,mingwportablepath:,staging,noupload,dependencies,64bit,keep,keep-upload-file,useccache,usemingw,nostrip -- "$@")
 eval set -- $params
 while true ; do
     case "$1" in
