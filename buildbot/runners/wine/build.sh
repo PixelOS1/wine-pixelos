@@ -31,7 +31,7 @@ while true ; do
         -w|--with) repo_url=$2; shift 2 ;;
         -v|--version) version=$2; shift 2 ;;
         -p|--patch) patch=$2; shift 2 ;;
-        -p|--mingwportablepath) MINGW_PORTABLE_PATH=$2; shift 2 ;;
+        -mpp|--mingwportablepath) MINGW_PORTABLE_PATH=$2; shift 2 ;;
         -s|--staging) STAGING=1; shift ;;
         -n|--noupload) NOUPLOAD=1; shift ;;
         -d|--dependencies) INSTALL_DEPS=$2; shift 2 ;;
@@ -227,16 +227,16 @@ BuildWine() {
     if [ $CCACHE ]; then
         export CC="ccache gcc"
             if [ "$(uname -m)" = "x86_64" ]; then
-                export CROSSCC="ccache x86_64-w64-mingw32-gcc"
+                export CROSSCC="ccache ${MINGW_PORTABLE_PATH}/x86_64-w64-mingw32-gcc"
             else
-                export CROSSCC="ccache i686-w64-mingw32-gcc"
+                export CROSSCC="ccache ${MINGW_PORTABLE_PATH}/i686-w64-mingw32-gcc"
             fi
         else
         export CC="gcc"
             if [ "$(uname -m)" = "x86_64" ]; then
-                export CROSSCC="x86_64-w64-mingw32-gcc"
+                export CROSSCC="${MINGW_PORTABLE_PATH}/x86_64-w64-mingw32-gcc"
             else
-                export CROSSCC="i686-w64-mingw32-gcc"
+                export CROSSCC="${MINGW_PORTABLE_PATH}/i686-w64-mingw32-gcc"
             fi
     fi
 
